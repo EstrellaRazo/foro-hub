@@ -12,6 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.Optional;
 
 @RestController
@@ -22,8 +23,11 @@ public class TopicoController {
     private TopicoRepository topicoRepository;
 
     @PostMapping
-    public void registrarTopico(@RequestBody @Valid DatosRegistroTopico datosRegistroTopico){
-        topicoRepository.save(new Topico(datosRegistroTopico));
+    public ResponseEntity<DatosRespuestaTopico> registrarTopico(@RequestBody @Valid DatosRegistroTopico datosRegistroTopico){
+        Topico topico = topicoRepository.save(new Topico(datosRegistroTopico));
+        DatosRespuestaTopico datosRespuestaTopico = new DatosRespuestaTopico(topico.getId(), topico.getTitulo(), topico.getMensaje(),
+                topico.getFechaCreacion(), topico.getStatus(), topico.getCategoria(), topico.getAutor());
+        return ResponseEntity.ok(datosRespuestaTopico);
     }
 
     @GetMapping
@@ -41,6 +45,29 @@ public class TopicoController {
             topicoActualizado.actualizarDatos(datos);
             topicoRepository.save(topicoActualizado);
             return ResponseEntity.ok(topicoActualizado);
+        }
+        else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DatosRespuestaTopico> detallarTopico(@PathVariable Long id) {
+        Topico topico = topicoRepository.getReferenceById(id);
+        var datosTopico = new DatosRespuestaTopico(topico.getId(), topico.getTitulo(), topico.getMensaje(),
+                topico.getFechaCreacion(), topico.getStatus(), topico.getCategoria(), topico.getAutor());
+        return ResponseEntity.ok(datosTopico);
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity eliminarTopico(@PathVariable Long id){
+        Optional<Topico> topico = topicoRepository.findById(id);
+        if(topico.isPresent())
+        {
+            Topico topicoAEliminar = topico.get();
+            topicoRepository.delete(topicoAEliminar);
+            return ResponseEntity.noContent().build();
         }
         else{
             return ResponseEntity.notFound().build();
