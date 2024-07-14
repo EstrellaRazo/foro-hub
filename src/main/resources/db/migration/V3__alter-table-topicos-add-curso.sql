@@ -1,0 +1,1 @@
+alter table topicos add curso varchar(150) not null;

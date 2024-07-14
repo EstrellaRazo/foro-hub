@@ -6,10 +6,9 @@ public record DatosRespuestaTopico(
         Long Id,
          String titulo,
          String mensaje,
+         String curso,
          LocalDateTime fechaCreacion,
-        
          Status status,
-        
          Categoria categoria,
          String autor
 ) {

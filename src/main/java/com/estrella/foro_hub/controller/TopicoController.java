@@ -24,7 +24,7 @@ public class TopicoController {
     public ResponseEntity<DatosRespuestaTopico> registrarTopico(@RequestBody @Valid DatosRegistroTopico datosRegistroTopico){
         Topico topico = topicoRepository.save(new Topico(datosRegistroTopico));
         DatosRespuestaTopico datosRespuestaTopico = new DatosRespuestaTopico(topico.getId(), topico.getTitulo(), topico.getMensaje(),
-                topico.getFechaCreacion(), topico.getStatus(), topico.getCategoria(), topico.getAutor());
+                topico.getCurso(), topico.getFechaCreacion(), topico.getStatus(), topico.getCategoria(), topico.getAutor());
         return ResponseEntity.ok(datosRespuestaTopico);
     }
 
@@ -53,7 +53,7 @@ public class TopicoController {
     public ResponseEntity<DatosRespuestaTopico> detallarTopico(@PathVariable Long id) {
         Topico topico = topicoRepository.getReferenceById(id);
         var datosTopico = new DatosRespuestaTopico(topico.getId(), topico.getTitulo(), topico.getMensaje(),
-                topico.getFechaCreacion(), topico.getStatus(), topico.getCategoria(), topico.getAutor());
+                topico.getCurso(), topico.getFechaCreacion(), topico.getStatus(), topico.getCategoria(), topico.getAutor());
         return ResponseEntity.ok(datosTopico);
     }
 

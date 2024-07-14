@@ -8,6 +8,8 @@ public record DatosRegistroTopico(
         String titulo,
         @NotBlank(message = "Ingrese el mensaje del tópico")
         String mensaje,
+        @NotBlank(message = "Ingrese el curso al que corresponde el topico del tópico")
+        String curso,
         @NotNull(message = "Ingrese la categoría del tópico")
         Categoria categoria,
         @NotBlank(message = "Ingrese el autor del tópico")

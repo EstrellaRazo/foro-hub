@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
@@ -21,6 +20,7 @@ public class Topico {
     private Long id;
     private String titulo;
     private String mensaje;
+    private String curso;
     private LocalDateTime fechaCreacion;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "PENDIENTE", nullable = false)
@@ -32,6 +32,7 @@ public class Topico {
     public Topico(DatosRegistroTopico datosRegistroTopico) {
         this.titulo = datosRegistroTopico.titulo();
         this.mensaje = datosRegistroTopico.mensaje();
+        this.curso = datosRegistroTopico.curso();
         this.categoria = datosRegistroTopico.categoria();
         this.autor = datosRegistroTopico.autor();
         this.fechaCreacion = LocalDateTime.now();
@@ -44,6 +45,9 @@ public class Topico {
         }
         if (datos.mensaje() != null) {
             this.mensaje = datos.mensaje();
+        }
+        if (datos.curso() != null) {
+            this.curso = datos.curso();
         }
         if (datos.categoria() != null) {
             this.categoria = datos.categoria();
