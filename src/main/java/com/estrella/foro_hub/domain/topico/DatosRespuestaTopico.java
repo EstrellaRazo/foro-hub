@@ -1,9 +1,5 @@
 package com.estrella.foro_hub.domain.topico;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-
 import java.time.LocalDateTime;
 
 public record DatosRespuestaTopico(
